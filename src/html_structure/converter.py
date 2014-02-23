@@ -2,7 +2,7 @@ from SimpleCV import Image
 from HTMLGenerator import divs_from_boxes
 
 def main():
-    out = convert("test6.jpg")
+    out = convert("test7.jpg")
     with open("output.html", 'w') as f:
         f.write(out)
 
@@ -13,7 +13,7 @@ def convert(img):
       
 
 def extract_div_info(image):
-    RECT_TOL = 0.5      # How close to rectangle?
+    RECT_TOL = 0.1     # How close to rectangle?
     MIN_AREA = 500      # Min number of pixels in an element
     NEAREST_EDGE = 20   # Num pixels from another edge
     MAX_HEIGHT = 700.0  # Page height
