@@ -42,13 +42,14 @@ def extract_div_info(image):
     for r in rects:
         (x,y) = map(min, zip(*r))
         (xmax,ymax) = map(max, zip(*r))
-        
         w = xmax - x
         h = ymax - y
         
-        c = map(int, (r_image*2).crop(x, y, w, h).meanColor())
+        i = (r_image*2).crop(x, y, w, h);
+        c = map(int, i.meanColor())
+        d = -i.area()
   
-        boxes.append({'x':x, 'y':y, 'width':w, 'height':h, 'color':c})
+        boxes.append({'x':x, 'y':y, 'width':w, 'height':h, 'color':c, 'depth':d})
   
 	#image.drawRectangle(x, y, width, height)
   
