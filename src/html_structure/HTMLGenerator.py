@@ -5,6 +5,10 @@ PAGE_TEMPLATE = '''
 <html>
 <style>
 body {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    text-align: center;
     z-index: -9999999;
 }
 div.outlined {
