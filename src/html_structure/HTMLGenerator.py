@@ -5,6 +5,7 @@ PAGE_TEMPLATE = '''
 <style>
 body {
     position: relative;
+    text-align: center;
     z-index: -9999999;
 }
 div.outlined {
@@ -16,7 +17,7 @@ border: 1px solid black;
 
 DIV_TEMPLATE = '''
 <{tag} class="outlined" style="position: absolute;
-left: {x}; top: {y}; width: {width}; height: {height};
+left: {x}%%; top: {y}%%; width: {width}%%; height: {height}%%;
 %s z-index:{depth}">
 </{tag}>'''
 

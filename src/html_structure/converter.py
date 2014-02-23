@@ -65,8 +65,15 @@ def extract_div_info(image):
             
             if c_blob.area() < MIN_AREA and c_blob.isSquare(1, 0.5) and abs(c_xmax-w) < BUTTON_TOL and c_y < BUTTON_TOL :
                 tag = 'button'
-                
-        boxes.append({'tag':tag, 'x':x, 'y':y, 'width':w, 'height':h, 'color':c, 'depth':d})
+        
+        iw = image.width
+        ih = image.height
+        boxes.append({'tag':tag, 
+                      'x' : x / iw * 100, 
+                      'y' : y / ih * 100, 
+                      'width' : w / iw * 100, 
+                      'height': h / ih * 100,
+                      'color':c, 'depth':d})
   
 	#image.drawRectangle(x, y, width, height)
   
