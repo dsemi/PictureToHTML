@@ -2,7 +2,7 @@ from SimpleCV import Image
 
 
 def main():
-    im_name = raw_input('Please enter image name')
+    im_name = raw_input('Please enter image name: ')
     image = Image(im_name)
 
     # Find corners to boxes
