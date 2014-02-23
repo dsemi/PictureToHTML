@@ -1,12 +1,13 @@
+import sys
 from SimpleCV import Image
 
 
 def main():
-    im_name = raw_input('Please enter image name: ')
-    image = Image(im_name)
+    image = Image(sys.argv[1])
 
     # Find corners to boxes
     #image.grayscale().edges().show()
+    image = image.resize(image.width/2, image.height/2)
     image = image.grayscale().edges()
     image = image.smooth().dilate().erode()
     image = image.smooth().dilate().erode()
