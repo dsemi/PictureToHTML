@@ -3,7 +3,7 @@ from HTMLGenerator import divs_from_boxes
 from character_recog import img_to_text
 
 def main():
-    out = convert("ocr_test.jpg")
+    out = convert("test6.jpg")
     with open("output.html", 'w') as f:
         f.write(out)
 

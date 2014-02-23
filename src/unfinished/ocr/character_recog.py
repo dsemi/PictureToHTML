@@ -4,8 +4,7 @@ from SimpleCV import Image
 import subprocess
 from shlex import split
 
-def main():
-    img = Image(sys.argv[1])
+def image_to_text(image):
     img = img.resize(img.width/2, img.height/2)
     img = img.grayscale().edges().dilate(4).erode()
     blobs = img.findBlobs()
