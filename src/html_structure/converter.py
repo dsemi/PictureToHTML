@@ -2,7 +2,8 @@ from SimpleCV import Image
 
 
 def main():
-    image = Image('test.jpg')
+    im_name = raw_input('Please enter image name')
+    image = Image(im_name)
 
     # Find corners to boxes
     #image.grayscale().edges().show()
