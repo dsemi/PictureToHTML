@@ -1,17 +1,15 @@
 import sys
 from SimpleCV import Image
 from HTMLGenerator import divs_from_boxes
-import time
 
 
 def main():
-      image = Image(sys.argv[1])
-      boxes = extract_div_info(image)
-      html = divs_from_boxes(boxes)
-
-      f = open('output.html', 'w')
-      f.write(html)
-      f.close()
+    image = Image(sys.argv[1])
+    boxes = extract_div_info(image)
+    html = divs_from_boxes(boxes)
+    
+    with open('output.html', 'w') as f:
+        f.write(html)
       
 
 def extract_div_info(image):
@@ -34,9 +32,9 @@ def extract_div_info(image):
 
     # Gets all the rectangles in the image
     rects = [b.minRect() for b in blobs if 
-	     b.isRectangle(RECT_TOL) 
-	     and b.area() > MIN_AREA 
-	     and b.distanceToNearestEdge() > NEAREST_EDGE]
+             b.isRectangle(RECT_TOL) 
+             and b.area() > MIN_AREA 
+             and b.distanceToNearestEdge() > NEAREST_EDGE]
     
     
     # Formats all box data for HTML gen
