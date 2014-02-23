@@ -48,7 +48,7 @@ def extract_div_info(image):
         w = xmax - x
         h = ymax - y
         
-        c = map(int, r_image.crop(x, y, w, h).meanColor())
+        c = map(int, (r_image*2).crop(x, y, w, h).meanColor())
   
         boxes.append({'x':x, 'y':y, 'width':w, 'height':h, 'color':c})
   
