@@ -1,19 +1,28 @@
 import sys
 from SimpleCV import Image
+from HTMLGenerator import divs_from_boxes
+import time
 
 
 def main():
+      image = Image(sys.argv[1])
+      boxes = extract_div_info(image)
+      html = divs_from_boxes(boxes)
+
+      f = open('output.html', 'w')
+      f.write(html)
+      f.close()
+      
+
+def extract_div_info(image):
     RECT_TOL = 0.5
     MIN_AREA = 500
     NEAREST_EDGE = 20
     MAX_HEIGHT = 700.0
     
-  
-    image = Image(sys.argv[1])
-    
     # Resize Image
     f = MAX_HEIGHT / image.height
-    image = image.resize(int(image.width * f), int(image.height * f))
+    image = r_image = image.resize(int(image.width * f), int(image.height * f))
 
     # Find corners to boxes
     image = image.grayscale().edges()
@@ -23,23 +32,31 @@ def main():
 
     blobs = image.findBlobs()
 
-    # Gets all the boxes in the image
-    boxes = [b.minRect() for b in blobs if 
+    # Gets all the rectangles in the image
+    rects = [b.minRect() for b in blobs if 
 	     b.isRectangle(RECT_TOL) 
 	     and b.area() > MIN_AREA 
 	     and b.distanceToNearestEdge() > NEAREST_EDGE]
-
-    # Draw all the boxes
-    for b in boxes:
-        (x,y) = map(min, zip(*b))
-        (xmax,ymax) = map(magitx, zip(*b))
+    
+    
+    # Formats all box data for HTML gen
+    boxes = []
+    for r in rects:
+        (x,y) = map(min, zip(*r))
+        (xmax,ymax) = map(max, zip(*r))
         
-        width = xmax - x
-        height = ymax - y
+        w = xmax - x
+        h = ymax - y
+        
+        c = map(int, r_image.crop(x, y, w, h).meanColor())
   
-	image.drawRectangle(x, y, width, height)
+        boxes.append({'x':x, 'y':y, 'width':w, 'height':h, 'color':c})
   
-    image.show()
+	#image.drawRectangle(x, y, width, height)
+  
+    #image.show()
+    
+    return boxes
   
 if __name__ == '__main__':
     main()
