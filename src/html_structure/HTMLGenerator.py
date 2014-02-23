@@ -1,6 +1,7 @@
 #!/usr/bin/python2
 
 PAGE_TEMPLATE = '''
+<DOCTYPE !html>
 <html>
 <style>
 body {
