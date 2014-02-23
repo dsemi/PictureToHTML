@@ -3,7 +3,11 @@
 PAGE_TEMPLATE = '''
 <html>
 <style>
-.outlined {
+body {
+    position: relative;
+    z-index: -9999999;
+}
+div.outlined {
 border: 1px solid black;
 }
 </style>
@@ -11,10 +15,10 @@ border: 1px solid black;
 </html>'''
 
 DIV_TEMPLATE = '''
-<div class="outlined" style="position: absolute;
+<{tag} class="outlined" style="position: absolute;
 left: {x}; top: {y}; width: {width}; height: {height};
 background:rgb({color[2]}, {color[1]}, {color[0]}); z-index:{depth}">
-</div>'''
+</{tag}>'''
 
 
 # As of right now this is very barebones, when more features of html are added, make class and have generators for different objects

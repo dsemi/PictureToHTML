@@ -2,7 +2,7 @@ from SimpleCV import Image
 from HTMLGenerator import divs_from_boxes
 
 def main():
-    out = convert("test5.jpg")
+    out = convert("test6.jpg")
     with open("output.html", 'w') as f:
         f.write(out)
 
@@ -13,10 +13,11 @@ def convert(img):
       
 
 def extract_div_info(image):
-    RECT_TOL = 0.5
-    MIN_AREA = 500
-    NEAREST_EDGE = 20
-    MAX_HEIGHT = 700.0
+    RECT_TOL = 0.5      # How close to rectangle?
+    MIN_AREA = 500      # Min number of pixels in an element
+    NEAREST_EDGE = 20   # Num pixels from another edge
+    MAX_HEIGHT = 700.0  # Page height
+    BUTTON_TOL = 10      # Num pixels from corner
     
     # Resize Image
     f = MAX_HEIGHT / image.height
@@ -48,8 +49,24 @@ def extract_div_info(image):
         i = (r_image*2).crop(x, y, w, h);
         c = map(int, i.meanColor())
         d = -i.area()
-  
-        boxes.append({'x':x, 'y':y, 'width':w, 'height':h, 'color':c, 'depth':d})
+        
+        # Determines element type
+        tag = 'div'
+        cropped = image.crop(x, y, w, h);
+        c_blobs = cropped.findBlobs();
+
+        # Determines if this is a button
+        for c_blob in c_blobs :
+            c_r = c_blob.minRect()
+            (c_x,c_y) = map(min, zip(*c_r))
+            (c_xmax, c_ymax) = map(max, zip(*c_r))
+            c_w = c_xmax - c_x
+            c_h = c_ymax - c_y
+            
+            if c_blob.area() < MIN_AREA and c_blob.isSquare(1, 0.5) and abs(c_xmax-w) < BUTTON_TOL and c_y < BUTTON_TOL :
+                tag = 'button'
+                
+        boxes.append({'tag':tag, 'x':x, 'y':y, 'width':w, 'height':h, 'color':c, 'depth':d})
   
 	#image.drawRectangle(x, y, width, height)
   
