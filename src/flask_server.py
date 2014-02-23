@@ -14,7 +14,7 @@ def root():
         if file:
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploaded_file', filename=filename))
+            return "done"
     return '''
     <!doctype html>
     <title>Upload new File</title>
