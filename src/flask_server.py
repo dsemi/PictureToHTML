@@ -1,6 +1,8 @@
 import os
-from flask import Flask, request, redirect, url_for
+from flask import Flask, request
 from werkzeug.utils import secure_filename
+
+from html_structure.converter import convert
 
 UPLOAD_FOLDER = 'uploads'
 
@@ -13,8 +15,11 @@ def root():
         file = request.files['file']
         if file:
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return "done"
+            f_name_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(f_name_path)
+            # Call thing here
+            html = convert(f_name_path)
+            return html
     return '''
     <!doctype html>
     <title>Upload new File</title>

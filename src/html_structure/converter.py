@@ -1,15 +1,16 @@
-import sys
 from SimpleCV import Image
 from HTMLGenerator import divs_from_boxes
 
 
 def main():
-    image = Image(sys.argv[1])
+    out = convert("test5.jpg")
+    with open("output.html", 'w') as f:
+        f.write(out)
+
+def convert(img):
+    image = Image(img)
     boxes = extract_div_info(image)
-    html = divs_from_boxes(boxes)
-    
-    with open('output.html', 'w') as f:
-        f.write(html)
+    return divs_from_boxes(boxes)
       
 
 def extract_div_info(image):

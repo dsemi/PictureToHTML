@@ -7,7 +7,7 @@ import sendgrid
 def main():
     s = sendgrid.SendGridClient(os.environ['SENDGRID_USERNAME'], os.environ['SENDGRID_KEY'], secure=True)
 
-    message = sendgrid.Mail(from_email='', subject='', text="", to=[""])
+    message = sendgrid.Mail(from_email='', subject='', text='', to=[''])
     
     # Attachments must be under 7MB in size each, and under 20MB total
     # Should add a check eventually
