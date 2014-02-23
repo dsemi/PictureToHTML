@@ -18,7 +18,7 @@ border: 1px solid black;
 DIV_TEMPLATE = '''
 <{tag} class="outlined" style="position: absolute;
 left: {x}%%; top: {y}%%; width: {width}%%; height: {height}%%;
-%s z-index:{depth}">
+%s z-index:{depth}">{text}
 </{tag}>'''
 
 

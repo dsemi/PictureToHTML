@@ -1,8 +1,9 @@
 from SimpleCV import Image
 from HTMLGenerator import divs_from_boxes
+from character_recog import img_to_text
 
 def main():
-    out = convert("test7.jpg")
+    out = convert("test.jpg")
     with open("output.html", 'w') as f:
         f.write(out)
 
@@ -46,16 +47,19 @@ def extract_div_info(image):
         w = xmax - x
         h = ymax - y
         
-        i = (r_image*2).crop(x, y, w, h);
+        i = (r_image*2).crop(x, y, w, h)
         c = map(int, i.meanColor())
         d = -i.area()
         
         # Determines element type
-        tag = 'div'
-        cropped = image.crop(x, y, w, h);
-        c_blobs = cropped.findBlobs();
+        cropped = image.crop(x, y, w, h)
+        c_blobs = cropped.findBlobs()
+        
+        # Gets the text
+        text = img_to_text(r_image.crop(x, y, w, h))
 
         # Determines if this is a button
+        tag = 'div'
         for c_blob in c_blobs :
             c_r = c_blob.minRect()
             (c_x,c_y) = map(min, zip(*c_r))
@@ -73,7 +77,7 @@ def extract_div_info(image):
                       'y' : y / ih * 100, 
                       'width' : w / iw * 100, 
                       'height': h / ih * 100,
-                      'color':c, 'depth':d})
+                      'color':c, 'depth':d, 'text':text})
   
 	#image.drawRectangle(x, y, width, height)
   
