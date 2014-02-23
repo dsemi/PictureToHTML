@@ -17,7 +17,7 @@ border: 1px solid black;
 DIV_TEMPLATE = '''
 <{tag} class="outlined" style="position: absolute;
 left: {x}; top: {y}; width: {width}; height: {height};
-background:rgb({color[2]}, {color[1]}, {color[0]}); z-index:{depth}">
+%s z-index:{depth}">
 </{tag}>'''
 
 
@@ -25,7 +25,7 @@ background:rgb({color[2]}, {color[1]}, {color[0]}); z-index:{depth}">
 # Then also move outer html out to another function
 
 def divs_from_boxes(box_list):
-    return PAGE_TEMPLATE % ('\n'.join([DIV_TEMPLATE.format(**box) for box in box_list]))
+    return PAGE_TEMPLATE % ('\n'.join([(DIV_TEMPLATE % ("background:rgb({color[2]}, {color[1]}, {color[0]}); " if box['tag'] != 'button' else "")).format(**box) for box in box_list]))
     
 def main():
     pass
