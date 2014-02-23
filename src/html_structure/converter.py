@@ -3,7 +3,7 @@ from HTMLGenerator import divs_from_boxes
 from character_recog import img_to_text
 
 def main():
-    out = convert("test.jpg")
+    out = convert("ocr_test.jpg")
     with open("output.html", 'w') as f:
         f.write(out)
 
@@ -56,7 +56,7 @@ def extract_div_info(image):
         c_blobs = cropped.findBlobs()
         
         # Gets the text
-        text = img_to_text(r_image.crop(x, y, w, h))
+        text = '' #img_to_text(r_image.crop(x, y, w, h))
 
         # Determines if this is a button
         tag = 'div'

@@ -8,9 +8,10 @@ def main():
     pass
 
 def img_to_text(img):
-    img = img.grayscale().edges().dilate(2).erode()
+    MIN_AREA = 500
+    
+    img = img.grayscale().edges().dilate().erode()
     img.show()
-    raw_input()
     blobs = img.findBlobs()
     
     if blobs is None:
@@ -22,10 +23,13 @@ def img_to_text(img):
     
     for b in blobs:
         b = b.crop().invert()
-        b.save(str.format('char.pgm'))
-        p = subprocess.Popen(split('ocrad --charset=ascii char.pgm'), stdout=subprocess.PIPE)
-        [output, errCode] = p.communicate()
-        text += output.strip()
+        if b.area() < MIN_AREA:
+            b.show()
+            b.save(str.format('char.pgm'))
+            raw_input()
+            p = subprocess.Popen(split('ocrad --charset=ascii char.pgm'), stdout=subprocess.PIPE)
+            [output, errCode] = p.communicate()
+            text += output.strip()
     
     return text
     
