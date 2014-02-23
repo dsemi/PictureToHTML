@@ -1,38 +1,34 @@
-from SimpleCV import Image, Color
+from SimpleCV import Image
 
-image = Image('test.jpg')
 
-# Find corners to boxes
-#image.grayscale().edges().show()
-image = image.grayscale().edges()
-image = image.smooth().dilate().erode()
-image = image.smooth().dilate().erode()
+def main():
+    image = Image('test.jpg')
 
-blobs = image.binarize().findBlobs()
+    # Find corners to boxes
+    #image.grayscale().edges().show()
+    image = image.grayscale().edges()
+    image = image.smooth().dilate().erode()
+    image = image.smooth().dilate().erode()
 
-# Gets all the boxes in the image
-boxes = []
-for b in blobs :
-  if b.area() > 200:
-    boxes.append(b.minRect())
+    blobs = image.binarize().findBlobs()
 
-# Draw all the boxes
-for b in boxes :
-  x = min(b[0][0], b[1][0], b[2][0], b[3][0])
-  y = min(b[0][1], b[1][1], b[2][1], b[3][1])
-  
-  xmax = max(b[0][0], b[1][0], b[2][0], b[3][0])
-  ymax = max(b[0][1], b[1][1], b[2][1], b[3][1])
-  
-  width = xmax - x
-  height = ymax - y
-  
-  print str.format('Origin: ({0}, {1})\nWidth: {2}\nHeight: {3}\n', x, y, width, height);
-  image.drawRectangle(x, y, width, height)
-  
-image.show()
+    # Gets all the boxes in the image
+    boxes = [b.minRect() for b in blobs if b.area() > 200]
 
+    # Draw all the boxes
+    for b in boxes:
+        (x,y) = map(min, zip(*b))
+        (xmax,ymax) = map(max, zip(*b))
+        
+        width = xmax - x
+        height = ymax - y
   
-raw_input()
+        print(str.format('Origin: ({0}, {1})\nWidth: {2}\nHeight: {3}\n', x, y, width, height))
+        image.drawRectangle(x, y, width, height)
   
-# fitContour()
+    image.show()
+  
+    raw_input()
+  
+if __name__ == '__main__':
+    main()
