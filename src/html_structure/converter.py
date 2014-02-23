@@ -1,7 +1,6 @@
 from SimpleCV import Image
 from HTMLGenerator import divs_from_boxes
 
-
 def main():
     out = convert("test5.jpg")
     with open("output.html", 'w') as f:
